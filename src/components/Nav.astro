@@ -1,0 +1,21 @@
+---
+import { site } from "../site.config";
+---
+
+<nav class="sticky top-0 z-40 border-b border-border/60 bg-bg/80 backdrop-blur supports-[backdrop-filter]:bg-bg/60">
+  <div class="container-x flex h-14 items-center justify-between">
+    <a href="#top" class="flex items-center gap-2 font-display text-base font-semibold tracking-tight">
+      <span class="inline-block h-2 w-2 rounded-full bg-accent" aria-hidden="true"></span>
+      <span>{site.name}</span>
+    </a>
+
+    <div class="flex items-center gap-2">
+      <a
+        href="#signup"
+        class="btn-primary text-sm"
+      >
+        Join early access
+      </a>
+    </div>
+  </div>
+</nav>

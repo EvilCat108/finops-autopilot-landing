@@ -1,0 +1,51 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import Pains from "../components/Pains.astro";
+import ValueBullets from "../components/ValueBullets.astro";
+import HowItWorks from "../components/HowItWorks.astro";
+import FAQ from "../components/FAQ.astro";
+import SignupForm from "../components/SignupForm.astro";
+import Footer from "../components/Footer.astro";
+import { site } from "../site.config";
+
+const submitted = Astro.url.searchParams.get("submitted") === "true";
+---
+
+<BaseLayout>
+  <main id="main">
+    <Hero />
+    <Pains />
+    <ValueBullets />
+    <HowItWorks />
+    <FAQ />
+
+    {submitted ? (
+      <section id="signup" class="section border-t border-border/60">
+        <div class="container-x">
+          <div class="mx-auto max-w-xl text-center">
+            <div class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-accent-soft text-accent">
+              <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m5 12 5 5L20 7" />
+              </svg>
+            </div>
+            <h2 class="mt-6 font-display text-3xl font-semibold tracking-tight text-text">
+              Thanks — you're on the list.
+            </h2>
+            <p class="mt-3 text-muted">
+              We'll be in touch within 2 business days. Reply directly to that email
+              if you want to fast-track.
+            </p>
+            <a href="#top" class="btn-ghost mt-8">
+              Back to top
+            </a>
+          </div>
+        </div>
+      </section>
+    ) : (
+      <SignupForm />
+    )}
+
+    <Footer />
+  </main>
+</BaseLayout>

@@ -1,0 +1,67 @@
+---
+const values = [
+  {
+    title: "Continuous waste detection",
+    body: "Idle EC2, unattached EBS, over-provisioned RDS, idle NAT gateways, unused ALBs/NLBs — surfaced every day, ranked by $ impact.",
+    icon: "scan",
+  },
+  {
+    title: "Safe, reversible fixes",
+    body: "Every cleanup runs through a read-only scan first. Actions are previewed, approved in-app, and one click away from rollback.",
+    icon: "shield",
+  },
+  {
+    title: "One weekly savings report",
+    body: "A short email: what was found, what was fixed, dollars saved this week. No 30-tab dashboards.",
+    icon: "mail",
+  },
+];
+---
+
+<section id="how" class="section border-t border-border/60 bg-surface/40">
+  <div class="container-x">
+    <div class="mx-auto max-w-2xl text-center reveal">
+      <h2 class="font-display text-3xl font-semibold tracking-tight text-text sm:text-4xl">
+        An agent that actually does the work.
+      </h2>
+      <p class="mt-4 text-muted">
+        Not another dashboard. A loop that finds waste, shows you the fix, and gets
+        approval to apply it.
+      </p>
+    </div>
+
+    <ul class="mt-14 grid gap-6 md:grid-cols-3">
+      {
+        values.map((v, i) => (
+          <li
+            class="card-hover relative reveal"
+            style={`transition-delay: ${i * 80}ms`}
+          >
+            <div class="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-input bg-text text-bg">
+              {v.icon === "scan" && (
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2" />
+                  <path d="M7 12h10" />
+                </svg>
+              )}
+              {v.icon === "shield" && (
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z" />
+                  <path d="m9 12 2 2 4-4" />
+                </svg>
+              )}
+              {v.icon === "mail" && (
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="5" width="18" height="14" rx="2" />
+                  <path d="m3 7 9 6 9-6" />
+                </svg>
+              )}
+            </div>
+            <h3 class="font-display text-lg font-semibold text-text">{v.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{v.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

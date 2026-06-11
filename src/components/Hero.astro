@@ -1,0 +1,65 @@
+---
+import { site } from "../site.config";
+import Nav from "./Nav.astro";
+import Countdown from "./Countdown.astro";
+---
+
+<header id="top" class="hero-bg">
+  <Nav />
+  <div class="container-x pt-20 pb-24 sm:pt-28 sm:pb-32">
+    <div class="mx-auto max-w-3xl text-center">
+      <div class="flex justify-center reveal">
+        <span class="eyebrow">
+          <span class="inline-block h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true"></span>
+          Early access · AWS only
+        </span>
+      </div>
+
+      <h1
+        class="mt-6 font-display text-4xl font-semibold tracking-tight text-text sm:text-5xl md:text-6xl reveal"
+        style="transition-delay: 60ms"
+      >
+        {site.tagline}
+      </h1>
+
+      <p
+        class="mt-6 text-lg leading-relaxed text-muted sm:text-xl reveal"
+        style="transition-delay: 120ms"
+      >
+        An agent that continuously scans your AWS account for idle EC2, orphaned EBS,
+        over-provisioned RDS, and unused load balancers — then cleans them up.
+        One weekly report. Simple flat monthly pricing.
+      </p>
+
+      <div
+        class="mt-10 flex flex-col items-center gap-4 reveal"
+        style="transition-delay: 180ms"
+      >
+        <a href="#signup" class="btn-primary px-6 py-3 text-base">
+          Join early access
+          <svg
+            class="h-4 w-4"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M3 8h10M9 4l4 4-4 4" />
+          </svg>
+        </a>
+
+        <Countdown />
+      </div>
+
+      <p
+        class="mt-8 text-sm text-muted reveal"
+        style="transition-delay: 240ms"
+      >
+        Read-only IAM by default · No agents to install
+      </p>
+    </div>
+  </div>
+</header>

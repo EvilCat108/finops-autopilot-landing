@@ -1,0 +1,70 @@
+---
+const faqs = [
+  {
+    q: "What IAM permissions does it need?",
+    a: "A CloudFormation or Terraform template that creates a read-only role by default. We only get ec2:TerminateInstances, rds:DeleteDBInstance, and similar on resources you've explicitly approved for cleanup. You can scope it to specific regions and tags. We log every API call.",
+  },
+  {
+    q: "Who is this for?",
+    a: "DevOps, Platform, and FinOps teams at mid-size companies running meaningful AWS workloads — typically $20k–$500k/month. AWS-only by design. Not a fit (yet) for orgs with strict change-control, but Slack-based approvals and SSO are on the roadmap.",
+  },
+  {
+    q: "What does “early access” mean?",
+    a: "Free during the early access period — we will grandfather pricing for everyone who joins. You get the product, direct Slack with the founders, and your feedback shapes the roadmap. Limited to ~50 teams so we can stay close.",
+  },
+  {
+    q: "Is this a subscription?",
+    a: "Yes. Simple flat monthly pricing once we leave early access. We'll publish exact tiers before billing starts, with at least 30 days' notice — you can keep using the product for free until then.",
+  },
+  {
+    q: "Where does my data live?",
+    a: "Findings live in our AWS account in us-east-1. We never store resource contents — only metadata (instance IDs, sizes, tags, attached volumes, region). You can request a full export or deletion at any time.",
+  },
+];
+---
+
+<section id="faq" class="section border-t border-border/60 bg-surface/40">
+  <div class="container-x">
+    <div class="mx-auto max-w-2xl text-center reveal">
+      <h2 class="font-display text-3xl font-semibold tracking-tight text-text sm:text-4xl">
+        Questions
+      </h2>
+      <p class="mt-4 text-muted">
+        The things security and platform teams ask us first.
+      </p>
+    </div>
+
+    <div class="mx-auto mt-12 max-w-2xl">
+      <ul class="space-y-2">
+        {
+          faqs.map((f, i) => (
+            <li
+              class="reveal"
+              style={`transition-delay: ${i * 40}ms`}
+            >
+              <details class="group rounded-card border border-border bg-bg open:shadow-card transition-shadow">
+                <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 font-medium text-text [&::-webkit-details-marker]:hidden">
+                  <span>{f.q}</span>
+                  <svg
+                    class="h-4 w-4 shrink-0 text-muted transition-transform duration-200 group-open:rotate-45"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M8 3v10M3 8h10" />
+                  </svg>
+                </summary>
+                <div class="px-5 pb-5 text-sm leading-relaxed text-muted">
+                  {f.a}
+                </div>
+              </details>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

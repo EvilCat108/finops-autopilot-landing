@@ -1,0 +1,50 @@
+---
+const steps = [
+  {
+    n: "01",
+    title: "Connect a read-only IAM role",
+    body: "We give you a CloudFormation or Terraform template. 10 minutes. We never get write access until you approve an action.",
+  },
+  {
+    n: "02",
+    title: "We scan and score waste",
+    body: "You see the top opportunities ranked by dollar impact, in a single dashboard — no spreadsheet exports, no separate login to a cost tool.",
+  },
+  {
+    n: "03",
+    title: "Approve fixes weekly",
+    body: "One-click approve, or set auto-fix rules for low-risk cleanups (e.g. unattached EBS older than 30 days). Approvals can route to Slack.",
+  },
+];
+---
+
+<section id="how-it-works" class="section border-t border-border/60">
+  <div class="container-x">
+    <div class="mx-auto max-w-2xl text-center reveal">
+      <h2 class="font-display text-3xl font-semibold tracking-tight text-text sm:text-4xl">
+        How it works
+      </h2>
+      <p class="mt-4 text-muted">
+        Three steps from signup to first savings.
+      </p>
+    </div>
+
+    <ol class="mt-14 grid gap-8 md:grid-cols-3 md:gap-6">
+      {
+        steps.map((s, i) => (
+          <li
+            class="relative reveal"
+            style={`transition-delay: ${i * 80}ms`}
+          >
+            <div class="flex items-baseline gap-3">
+              <span class="font-mono text-sm font-semibold text-accent">{s.n}</span>
+              <div class="h-px flex-1 bg-border" />
+            </div>
+            <h3 class="mt-4 font-display text-lg font-semibold text-text">{s.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{s.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

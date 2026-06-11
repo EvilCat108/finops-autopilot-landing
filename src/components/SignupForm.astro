@@ -1,0 +1,95 @@
+---
+const roleOptions = [
+  { value: "", label: "Select your role…" },
+  { value: "devops", label: "DevOps / SRE" },
+  { value: "platform", label: "Platform Engineering" },
+  { value: "finops", label: "FinOps" },
+  { value: "leadership", label: "CTO / VP Engineering" },
+  { value: "other", label: "Other" },
+];
+
+const spendOptions = [
+  { value: "", label: "Select monthly AWS spend…" },
+  { value: "lt5k", label: "Under $5k" },
+  { value: "5to25k", label: "$5k – $25k" },
+  { value: "25to100k", label: "$25k – $100k" },
+  { value: "100to500k", label: "$100k – $500k" },
+  { value: "gt500k", label: "$500k+" },
+];
+---
+
+<section id="signup" class="section border-t border-border/60">
+  <div class="container-x">
+    <div class="mx-auto max-w-xl">
+      <div class="text-center reveal">
+        <h2 class="font-display text-3xl font-semibold tracking-tight text-text sm:text-4xl">
+          Join early access
+        </h2>
+        <p class="mt-3 text-muted">
+          We're onboarding ~50 teams. Tell us a bit about you and we'll be in
+          touch within 2 business days.
+        </p>
+      </div>
+
+      <form
+        name="early-access"
+        method="POST"
+        data-netlify="true"
+        data-netlify-honeypot="bot-field"
+        netlify-honeypot="bot-field"
+        action="/?submitted=true#signup"
+        class="card mt-10 reveal"
+        style="transition-delay: 80ms"
+      >
+        <input type="hidden" name="form-name" value="early-access" />
+
+        <!-- Honeypot for spam bots -->
+        <p class="hidden" aria-hidden="true">
+          <label>
+            Don't fill this out:
+            <input name="bot-field" tabindex="-1" autocomplete="off" />
+          </label>
+        </p>
+
+        <div>
+          <label for="email" class="label">Work email</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            autocomplete="email"
+            placeholder="you@company.com"
+            class="input"
+          />
+        </div>
+
+        <div class="mt-5">
+          <label for="role" class="label">Role</label>
+          <select id="role" name="role" required class="input">
+            {roleOptions.map((o) => <option value={o.value}>{o.label}</option>)}
+          </select>
+        </div>
+
+        <div class="mt-5">
+          <label for="spend" class="label">AWS monthly spend</label>
+          <select id="spend" name="spend" required class="input">
+            {spendOptions.map((o) => <option value={o.value}>{o.label}</option>)}
+          </select>
+        </div>
+
+        <button
+          type="submit"
+          class="btn-primary mt-6 w-full justify-center px-5 py-3 text-base"
+        >
+          Request early access
+        </button>
+
+        <p class="mt-4 text-center text-xs text-muted">
+          We'll only use your email to contact you about early access.
+          No newsletter, no marketing list.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>

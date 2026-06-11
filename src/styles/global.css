@@ -1,0 +1,139 @@
+/* Self-hosted fonts — must precede @tailwind directives */
+@import "@fontsource-variable/inter/index.css";
+@import "@fontsource-variable/jetbrains-mono/index.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design tokens */
+:root,
+[data-theme="light"] {
+  --bg: 255 255 255;
+  --surface: 247 247 248;
+  --surface-2: 240 240 243;
+  --border: 229 229 231;
+  --text: 10 10 11;
+  --muted: 107 107 115;
+  --accent: 255 107 26;
+  --accent-soft: 255 232 219;
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: 10 10 11;
+  --surface: 19 19 22;
+  --surface-2: 28 28 33;
+  --border: 38 38 43;
+  --text: 245 245 247;
+  --muted: 154 154 163;
+  --accent: 255 138 76;
+  --accent-soft: 56 32 16;
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-bg text-text font-sans;
+    font-feature-settings: "ss01", "cv11";
+    min-height: 100dvh;
+  }
+
+  ::selection {
+    background: rgb(var(--accent) / 0.25);
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-bg;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display tracking-tight;
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-container px-6;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-input px-5 py-2.5 text-sm font-medium transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-primary {
+    @apply btn bg-accent text-white hover:bg-accent/90 active:bg-accent/95 shadow-[0_1px_2px_rgb(0_0_0/0.1),0_8px_24px_-12px_rgb(255_107_26/0.5)];
+  }
+
+  .btn-ghost {
+    @apply btn text-text hover:bg-surface;
+  }
+
+  .card {
+    @apply rounded-card border border-border bg-surface p-6 transition-all duration-200;
+  }
+
+  .card-hover {
+    @apply card hover:border-text/20 hover:-translate-y-0.5;
+  }
+
+  .input {
+    @apply w-full rounded-input border border-border bg-bg px-3.5 py-2.5 text-sm text-text placeholder:text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 transition;
+  }
+
+  .label {
+    @apply block text-sm font-medium text-text mb-1.5;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs font-medium text-muted;
+  }
+
+  .section {
+    @apply py-20 sm:py-28;
+  }
+
+  /* Scroll-fade animation utility (driven by IntersectionObserver) */
+  .reveal {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    will-change: opacity, transform;
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+/* Subtle ambient background for hero */
+.hero-bg {
+  background-image:
+    radial-gradient(ellipse 60% 50% at 50% 0%, rgb(var(--accent) / 0.08), transparent 60%),
+    radial-gradient(ellipse 40% 30% at 80% 10%, rgb(var(--accent) / 0.05), transparent 60%);
+}
+
+[data-theme="dark"] .hero-bg {
+  background-image:
+    radial-gradient(ellipse 60% 50% at 50% 0%, rgb(var(--accent) / 0.12), transparent 60%),
+    radial-gradient(ellipse 40% 30% at 80% 10%, rgb(var(--accent) / 0.08), transparent 60%);
+}
