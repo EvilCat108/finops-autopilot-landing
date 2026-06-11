@@ -23,3 +23,7 @@ pnpm-debug.log*
 
 # netlify
 .netlify/
+
+# wrangler (local Cloudflare dev)
+.dev.vars
+.wrangler/

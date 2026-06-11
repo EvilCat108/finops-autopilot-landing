@@ -32,17 +32,13 @@ const spendOptions = [
       </div>
 
       <form
+        id="early-access-form"
         name="early-access"
         method="POST"
-        data-netlify="true"
-        data-netlify-honeypot="bot-field"
-        netlify-honeypot="bot-field"
-        action="/?submitted=true#signup"
+        action="/submit"
         class="card mt-10 reveal"
         style="transition-delay: 80ms"
       >
-        <input type="hidden" name="form-name" value="early-access" />
-
         <!-- Honeypot for spam bots -->
         <p class="hidden" aria-hidden="true">
           <label>
@@ -82,8 +78,20 @@ const spendOptions = [
           type="submit"
           class="btn-primary mt-6 w-full justify-center px-5 py-3 text-base"
         >
-          Request early access
+          <span data-label>Request early access</span>
+          <svg
+            data-spinner
+            class="h-4 w-4 animate-spin hidden"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" stroke-opacity="0.25" />
+            <path d="M22 12a10 10 0 0 1-10 10" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+          </svg>
         </button>
+
+        <p data-error class="mt-4 hidden text-center text-sm text-red-600"></p>
 
         <p class="mt-4 text-center text-xs text-muted">
           We'll only use your email to contact you about early access.
@@ -93,3 +101,64 @@ const spendOptions = [
     </div>
   </div>
 </section>
+
+<script>
+  // Progressive enhancement: AJAX submit with graceful no-JS fallback
+  // (the form's action="/submit" still works without JS via 303 redirect).
+  (function () {
+    const form = document.getElementById("early-access-form") as HTMLFormElement | null;
+    const button = form?.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const label = form?.querySelector<HTMLElement>("[data-label]");
+    const spinner = form?.querySelector<HTMLElement>("[data-spinner]");
+    const error = form?.querySelector<HTMLElement>("[data-error]");
+    if (!form || !button || !label || !spinner || !error) return;
+
+    form.addEventListener("submit", async function (e) {
+      // Let the browser's native validation run first
+      if (!form.reportValidity()) return;
+
+      e.preventDefault();
+      error.classList.add("hidden");
+      error.textContent = "";
+
+      const originalLabel = label.textContent ?? "";
+      button.disabled = true;
+      label.textContent = "Submitting…";
+      spinner.classList.remove("hidden");
+
+      const reset = (): void => {
+        button.disabled = false;
+        label.textContent = originalLabel;
+        spinner.classList.add("hidden");
+      };
+
+      try {
+        const formData = new FormData(form);
+        const res = await fetch(form.action, {
+          method: form.method,
+          body: formData,
+          headers: { Accept: "application/json" },
+        });
+
+        if (res.redirected) {
+          window.location.href = res.url;
+          return;
+        }
+        if (res.ok) {
+          // Function may return 200 with a body in some edge cases — treat as success
+          window.location.href = "/?submitted=true#signup";
+          return;
+        }
+
+        const msg = await res.text().catch(() => "Submission failed");
+        error.textContent = msg || "Submission failed. Please try again.";
+        error.classList.remove("hidden");
+        reset();
+      } catch {
+        error.textContent = "Network error. Please try again.";
+        error.classList.remove("hidden");
+        reset();
+      }
+    });
+  })();
+</script>

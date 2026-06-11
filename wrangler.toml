@@ -1,0 +1,19 @@
+name = "finops-autopilot"
+compatibility_date = "2024-12-01"
+pages_build_output_dir = "./dist"
+
+# KV namespace for waitlist submissions.
+# Create with:
+#   npx wrangler kv:namespace create EARLY_ACCESS
+#   npx wrangler kv:namespace create EARLY_ACCESS --preview
+# Then paste the IDs below.
+[[kv_namespaces]]
+binding = "EARLY_ACCESS"
+id = "REPLACE_WITH_PROD_NAMESPACE_ID"
+preview_id = "REPLACE_WITH_PREVIEW_NAMESPACE_ID"
+
+# Environment variables are NOT set here.
+# Set ADMIN_TOKEN in the Cloudflare Pages dashboard:
+#   Settings → Environment variables
+# For local dev, create a `.dev.vars` file (gitignored) with:
+#   ADMIN_TOKEN="<random 32-char string>"
