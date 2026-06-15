@@ -71,43 +71,47 @@ npm run build        # → dist/
 
 ## Deploy to Cloudflare Pages
 
-### One-time setup
+This project uses **Direct Upload** (no Git integration). The first deploy is
+fully scripted via the Cloudflare API; ongoing deploys are a single CLI command.
 
-1. **Create the KV namespace** (one prod, one for preview/local dev):
+### One-time setup (already done)
+
+1. Created the KV namespace pair:
    ```bash
-   npx wrangler login
-   npx wrangler kv:namespace create EARLY_ACCESS
-   npx wrangler kv:namespace create EARLY_ACCESS --preview
+   npx wrangler kv namespace create EARLY_ACCESS
+   npx wrangler kv namespace create EARLY_ACCESS --preview
    ```
-   Paste the returned IDs into `wrangler.toml` (`id` and `preview_id`).
+2. Created the Pages project via API with Direct Upload mode
+3. Bound the KV namespace (prod: `a823ebbc5d1f4fb0a84a7468e0fb90a1`,
+   preview: `0748d1ebc6404cad96b1c501a1adaa92`) and the `ADMIN_TOKEN` env var
+   via `PATCH /accounts/{id}/pages/projects/finops-autopilot`
 
-2. **Generate an admin token** (for viewing submissions):
-   ```bash
-   node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
-   ```
-   Save this — you'll need it in the dashboard step below.
+### Ongoing deploys
 
-3. **Connect the GitHub repo** to Cloudflare Pages:
-   - Go to https://dash.cloudflare.com/ → **Workers & Pages** → **Create** → **Pages** → **Import from Git**
-   - Pick `EvilCat108/finops-autopilot-landing`
-   - Build settings:
-     - Build command: `npm run build`
-     - Build directory: `dist`
-   - Click **Save and Deploy**
+```bash
+npm run build
+npx wrangler pages deploy dist --project-name finops-autopilot --branch main
+```
 
-4. **Bind the KV namespace** in the Pages dashboard:
-   - Project → **Settings** → **Functions** → **KV namespace bindings**
-   - Add binding: Variable name `EARLY_ACCESS` → select the namespace you created
+Wrangler picks up `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` from
+your shell environment. If you need to rotate the admin token, generate a new
+one and update the Pages project:
 
-5. **Set the admin token env var**:
-   - Project → **Settings** → **Environment variables**
-   - Variable name: `ADMIN_TOKEN`
-   - Value: paste the 64-char hex string from step 2
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+# then update via dashboard: Settings → Environment variables
+```
 
-### Ongoing
+### Why Direct Upload (not Git integration)?
 
-- Push to `main` → automatic production deploy to `https://finops-autopilot.pages.dev`
-- Open a PR → automatic preview deploy at `https://<hash>.finops-autopilot.pages.dev`
+Git integration requires installing the Cloudflare Pages GitHub OAuth app on
+your account — a one-time browser step that can't be scripted. Direct Upload
+gives you identical runtime behaviour (preview URLs, KV bindings, functions,
+env vars) and trades automatic-deploys-on-push for a single deploy command.
+
+If you want Git integration later, install the OAuth app at
+https://dash.cloudflare.com/ → Workers & Pages → Create → Pages → Import
+from Git, then point the repo at the existing project.
 
 ## Viewing form submissions
 
