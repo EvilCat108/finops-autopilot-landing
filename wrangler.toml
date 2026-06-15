@@ -9,8 +9,8 @@ pages_build_output_dir = "./dist"
 # Then paste the IDs below.
 [[kv_namespaces]]
 binding = "EARLY_ACCESS"
-id = "REPLACE_WITH_PROD_NAMESPACE_ID"
-preview_id = "REPLACE_WITH_PREVIEW_NAMESPACE_ID"
+id = "a823ebbc5d1f4fb0a84a7468e0fb90a1"
+preview_id = "0748d1ebc6404cad96b1c501a1adaa92"
 
 # Environment variables are NOT set here.
 # Set ADMIN_TOKEN in the Cloudflare Pages dashboard:
